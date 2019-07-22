@@ -4,6 +4,7 @@ namespace Webflorist\PackageBlueprint;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Webflorist\StaticRoutes\Commands\PackageBlueprintCommand;
 
 class PackageBlueprintServiceProvider extends ServiceProvider
 {
@@ -38,7 +39,7 @@ class PackageBlueprintServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/config/package-blueprint.php', 'package-blueprint');
     }
-    
+
     protected function registerService()
     {
         $this->app->singleton(PackageBlueprintService::class, function () {
@@ -57,31 +58,31 @@ class PackageBlueprintServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                PackageBlueprintCommand::class
             ]);
         }
     }
-	
 
     private function loadMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__.'/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/migrations');
     }
 
     private function loadTranslations()
     {
-        $this->loadTranslationsFrom(__DIR__ . "/resources/lang","Webflorist-PackageBlueprint");
+        $this->loadTranslationsFrom(__DIR__ . "/resources/lang", "Webflorist-PackageBlueprint");
     }
 
     private function loadViews()
     {
-        $this->loadViewsFrom(__DIR__.'/views', 'package-blueprint');
+        $this->loadViewsFrom(__DIR__ . '/views', 'package-blueprint');
     }
 
     private function setBladeDirectives()
     {
         /** @var BladeCompiler $blade */
-        $blade =  app(BladeCompiler::class);
-        $blade->directive('package_blueprint', function ($marker='default') {
+        $blade = app(BladeCompiler::class);
+        $blade->directive('package_blueprint', function ($marker = 'default') {
             return "<?php echo 'package_blueprint' ?>";
         });
     }

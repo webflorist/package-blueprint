@@ -2,7 +2,7 @@
 
 namespace Webflorist\PackageBlueprint\Exceptions;
 
-use \Exception;
+use Exception;
 
 class PackageBlueprintException extends Exception
 {

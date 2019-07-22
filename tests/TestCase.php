@@ -5,8 +5,8 @@ namespace PackageBlueprintTests;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Routing\Router;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Webflorist\PackageBlueprint\PackageBlueprintServiceProvider;
 use Webflorist\PackageBlueprint\PackageBlueprintFacade;
+use Webflorist\PackageBlueprint\PackageBlueprintServiceProvider;
 
 /**
  * Class TestCase
