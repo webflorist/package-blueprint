@@ -37,7 +37,7 @@ class PackageBlueprintServiceProvider extends ServiceProvider
 
     protected function mergeConfig()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/package-blueprint.php', 'package-blueprint');
+        $this->mergeConfigFrom(__DIR__ . '/../config/package-blueprint.php', 'package-blueprint');
     }
 
     protected function registerService()
@@ -50,7 +50,7 @@ class PackageBlueprintServiceProvider extends ServiceProvider
     protected function publishConfig()
     {
         $this->publishes([
-            __DIR__ . '/config/package-blueprint.php' => config_path('package-blueprint.php'),
+            __DIR__ . '/../config/package-blueprint.php' => config_path('package-blueprint.php'),
         ]);
     }
 
@@ -65,17 +65,17 @@ class PackageBlueprintServiceProvider extends ServiceProvider
 
     private function loadMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 
     private function loadTranslations()
     {
-        $this->loadTranslationsFrom(__DIR__ . "/resources/lang", "Webflorist-PackageBlueprint");
+        $this->loadTranslationsFrom(__DIR__ . "/../resources/lang", "Webflorist-PackageBlueprint");
     }
 
     private function loadViews()
     {
-        $this->loadViewsFrom(__DIR__ . '/views', 'package-blueprint');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'package-blueprint');
     }
 
     private function setBladeDirectives()
@@ -85,5 +85,12 @@ class PackageBlueprintServiceProvider extends ServiceProvider
         $blade->directive('package_blueprint', function ($marker = 'default') {
             return "<?php echo 'package_blueprint' ?>";
         });
+    }
+
+    private function addMiddleware(string $middleware)
+    {
+        if($this->app['router']->hasMiddlewareGroup('web')) {
+            $this->app['router']->pushMiddlewareToGroup('web', $middleware);
+        }
     }
 }

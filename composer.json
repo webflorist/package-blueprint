@@ -20,7 +20,7 @@
             "PackageBlueprintTests\\": "tests/"
         },
         "files": [
-            "src/helpers.php"
+            "helpers.php"
         ]
     },
     "extra": {

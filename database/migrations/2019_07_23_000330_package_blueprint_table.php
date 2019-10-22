@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PackageBlueprintMigration extends Migration
+class CreatePackageBlueprintTable extends Migration
 {
 
     /**
@@ -14,7 +14,7 @@ class PackageBlueprintMigration extends Migration
      */
     public function up()
     {
-        Schema::create('package-blueprint', function (Blueprint $table) {
+        Schema::create('package_blueprint', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ class PackageBlueprintMigration extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('package-blueprint');
+        Schema::dropIfExists('package_blueprint');
     }
 }
