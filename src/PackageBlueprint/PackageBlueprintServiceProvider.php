@@ -4,7 +4,7 @@ namespace Webflorist\PackageBlueprint;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Webflorist\StaticRoutes\Commands\PackageBlueprintCommand;
+use Webflorist\PackageBlueprint\Commands\PackageBlueprintCommand;
 
 class PackageBlueprintServiceProvider extends ServiceProvider
 {
@@ -31,8 +31,10 @@ class PackageBlueprintServiceProvider extends ServiceProvider
         $this->registerArtisanCommands();
         $this->loadMigrations();
         $this->loadTranslations();
+	$this->addGlobalMiddleware(PackageBlueprintMiddleware::class);
         $this->loadViews();
         $this->setBladeDirectives();
+        $this->addRoutes();
     }
 
     protected function mergeConfig()
@@ -87,10 +89,22 @@ class PackageBlueprintServiceProvider extends ServiceProvider
         });
     }
 
-    private function addMiddleware(string $middleware)
+    private function addWebMiddleware(string $middleware)
     {
         if($this->app['router']->hasMiddlewareGroup('web')) {
             $this->app['router']->pushMiddlewareToGroup('web', $middleware);
         }
+    }
+
+    private function addGlobalMiddleware(string $middleware)
+    {
+        $this->app['Illuminate\Contracts\Http\Kernel']->pushMiddleware($middleware);
+    }
+
+    private function addRoutes()
+    {
+        /** @var Router $router */
+        $router = $this->app['router'];
+        $router->get('package-blueprint', function(){})->only('index');
     }
 }
